@@ -17,7 +17,7 @@ if os.path.exists('env.py'):
     import env
 
 CLOUDINARY_STORAGE = {
-    'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
+    'CLOUDINARY_STORAGE_URL': os.environ.get('CLOUDINARY_URL')
 }
 
 MEDIA_URL = '/media/'
@@ -31,25 +31,32 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-zr8(m!^3aufdo%+dxnkt$ygt)%shw+u(ah^zni0r247igq7*d2'
+SECRET_KEY = os.environ.get('SECRECT_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['8000-pjdevex-cidjangorest-dpemwwsaqn1.ws-eu102.gitpod.io']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    # Django default apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',
+    'cloudinary_storage', # this is too a 3rd party app
     'django.contrib.staticfiles',
+
+    # 3rd party apps
     'cloudinary',
+    'rest_framework',
+
+    # local apps
+    'app_profile',
 
 ]
 
