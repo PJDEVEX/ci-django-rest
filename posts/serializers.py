@@ -10,7 +10,7 @@ class PostSerializer(serializers.ModelSerializer):
     # Read-only field showing the profile ID of the owner
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     # Read-only field showing the profile image URL of the owner
-    profile_image = serializers.ReadOnlyField(source='owner.profile.profile_image_url')
+    profile_image = serializers.ReadOnlyField(source='owner.profile.image_url')
 
     def get_is_owner(self, obj):
         """
@@ -42,7 +42,8 @@ class PostSerializer(serializers.ModelSerializer):
         # Return the original value
         return value
 
-
     class Meta:
         model = Post
-        fields = ['id', 'owner', 'created_at', 'updated_at', 'name', 'content', 'image', 'is_owner', 'image_filter_choices']
+        fields = ['id', 'owner', 'is_owner', 'profile_id',
+            'profile_image', 'created_at', 'updated_at',
+            'title', 'content', 'image', 'image_filter']

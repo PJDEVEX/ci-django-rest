@@ -24,7 +24,7 @@ class Post(models.Model):
         upload_to='images/',
         default='https://res.cloudinary.com/pjdevex/image/upload/v1682939147/samples/animals/kitten-playing.gif',
         blank=True)
-    imange_filter = models.CharField(
+    image_filter = models.CharField(
         max_length=32,
         choices=image_filter_choices,
         default='normal',

@@ -23,4 +23,6 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     # Adding profiles.urls in the main router
     path('', include('app_profile.urls')),
+    # Adding posts.url in the main router
+    path('', include('posts.urls')),
 ]
