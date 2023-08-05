@@ -24,6 +24,9 @@ class PostList(APIView):
         """
         Create a new post.
         """
+        if not request.user.is_authenticated:
+            return Response({'detail': 'Authentication credentials were not provided.'}, status=status.HTTP_403_FORBIDDEN)
+
         serializer = PostSerializer(data=request.data, context={'request': request})
 
         if serializer.is_valid():
@@ -66,5 +69,4 @@ class PostDetail(APIView):
     def delete(self, request, pk):
         post = self.get_object(pk)
         post.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
+        return Response(status=status.HTTP_403_FORBIDDEN)
