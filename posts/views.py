@@ -1,12 +1,11 @@
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
-from .models import Post
-from rest_framework import status
+from rest_framework import status, permissions
 from .serializers import PostSerializer
 from .models import Post
 from drf.permissions import IsOwnerOrReadOnly
+from rest_framework.exceptions import PermissionDenied
 
 class PostList(APIView):
     permission_classes = [IsOwnerOrReadOnly]
@@ -37,7 +36,6 @@ class PostList(APIView):
     
 
 class PostDetail(APIView):
-    queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
@@ -49,6 +47,8 @@ class PostDetail(APIView):
             return post
         except Post.DoesNotExist:
             raise Http404
+        except PermissionDenied:
+            raise Http403
 
     # Define the get method to retrieve a post by ID
     def get(self, request, pk):
@@ -69,4 +69,4 @@ class PostDetail(APIView):
     def delete(self, request, pk):
         post = self.get_object(pk)
         post.delete()
-        return Response(status=status.HTTP_403_FORBIDDEN)
+        return Response(status=status.HTTP_204_NO_CONTENT)
