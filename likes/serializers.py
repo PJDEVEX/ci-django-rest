@@ -1,3 +1,4 @@
+from django.db import IntegrityError 
 from rest_framework import serializers
 from .models import Like
 
@@ -9,3 +10,14 @@ class LikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like
         fields =  ['id', 'created_at', 'owner', 'post']
+
+    def create(self, validated_data):
+        try:
+            # Try to create a new Like object with the validated data
+            return super().create(validated_data)
+        except IntegrityError:
+            # If an IntegrityError occurs (likely due to a duplicate like),
+            # raise a serializers.ValidationError with a custom detail message.
+            raise serializers.ValidationError({
+                'detail': 'You have already liked this post.'
+            })

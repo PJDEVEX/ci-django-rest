@@ -26,5 +26,7 @@ urlpatterns = [
     # Adding posts.url in the main router
     path('', include('posts.urls')),
     # Adding comments.urls 
-    path('', include('comments.urls'))
+    path('', include('comments.urls')),
+    # Adding likes.urls
+    path('', include('likes.urls')),
 ]
