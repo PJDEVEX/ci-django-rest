@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Comment
+from .models import Comment, Post
 
 # Serializer for the Comment model
 class CommentSerializer(serializers.ModelSerializer):
@@ -20,9 +20,22 @@ class CommentSerializer(serializers.ModelSerializer):
         return request.user == obj.owner
 
     class Meta:
-        model = Post
+        model = Comment
         fields = ['id', 'owner', 'is_owner', 'profile_id',
-            'post', 'created_at', 'updated_at',
-            'content'
-            ]
+        'profile_image', 'post', 'created_at', 'updated_at',
+        'content'
+        ]
 
+class CommentDetailSerializer(CommentSerializer):
+    """
+    Serializer for representing a detailed view of a comment.
+
+    Inherits from CommentSerializer and adds an additional field:
+    - post: Represents the associated post's ID (read-only).
+
+    The post field is a read-only field, which means it can only be used
+    for serialization and will not be used for deserialization when creating
+    or updating a comment. It shows the ID of the post to which the comment
+    belongs.
+    """
+    post = serializers.ReadOnlyField(source='Post.id')

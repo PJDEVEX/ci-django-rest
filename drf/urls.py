@@ -25,4 +25,6 @@ urlpatterns = [
     path('', include('app_profile.urls')),
     # Adding posts.url in the main router
     path('', include('posts.urls')),
+    # Adding comments.urls 
+    path('', include('comments.urls'))
 ]
