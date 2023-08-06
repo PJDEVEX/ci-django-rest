@@ -29,4 +29,5 @@ urlpatterns = [
     path('', include('comments.urls')),
     # Adding likes.urls
     path('', include('likes.urls')),
+    path('', include('followers.urls'))
 ]
