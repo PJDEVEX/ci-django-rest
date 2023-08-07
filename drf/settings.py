@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'cloudinary_storage', # this is too a 3rd party app
     'django.contrib.staticfiles',
+    'django_filters',
 
     # 3rd party apps
     'cloudinary',
