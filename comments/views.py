@@ -1,5 +1,6 @@
 # Step 1: Import necessary modules
 from rest_framework import generics, permissions
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Comment
 from .serializers import CommentSerializer, CommentDetailSerializer
 from drf.permissions import IsOwnerOrReadOnly
@@ -10,6 +11,12 @@ class CommentList(generics.ListCreateAPIView):
     # Step 3: Set serializer class and permission classes
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    filter_backends = [
+        DjangoFilterBackend,
+    ]
+    filterset_fields = [
+        'post'
+        ]
 
     # Step 4: Define queryset to list all comments
     queryset = Comment.objects.all()
