@@ -15,12 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import root_route
+from .views import root_route, logout_route
 
 urlpatterns = [
     #  Root API route
     path('', root_route, name='root-route'),
     path('admin/', admin.site.urls),
+
+    # logout route has to be above the default to be matched first
+    path('dj_rest_auth/logout', logout_route),
+    path('dj_rest_auth/', include('dj_rest_auth.urls')),
+
     # login and logout views for the browsable API
     # https://www.django-rest-framework.org/
     path('api-auth/', include('rest_framework.urls')),
