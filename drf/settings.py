@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 if os.path.exists('env.py'):
     import env
@@ -54,6 +55,8 @@ JWT_AUTH_SECURE = True
 JWT_AUTH_COOKIE: 'my-app-auth'
 # Refesh Token
 JWT_AUTH_REFRESH_COOKIE: 'my-refresh-token'
+# Let the front and back ends app to be in different platform
+JWT_AUTH_SAMESITE = 'None'
 
 # Overwrite default serializer
 REST_DETAILS_SERIALIZER = {
@@ -67,9 +70,12 @@ REST_DETAILS_SERIALIZER = {
 SECRET_KEY = os.environ.get('SECRECT_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'DEV' in os.environ
 
-ALLOWED_HOSTS = ['8000-pjdevex-cidjangorest-dpemwwsaqn1.ws-eu102.gitpod.io']
+ALLOWED_HOSTS = [
+    '8000-pjdevex-cidjangorest-dpemwwsaqn1.ws-eu102.gitpod.io',
+    'https://ci-drf-api-pj-87220ee25e96.herokuapp.com/'
+    ]
 
 
 # Application definition
@@ -83,6 +89,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'cloudinary_storage', # this is too a 3rd party app
     'django.contrib.staticfiles',
+
+    # 3rd party apps
     'django_filters',
     'rest_framework.authtoken',
     'dj_rest_auth',
@@ -91,10 +99,10 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount', 
     'dj_rest_auth.registration',
-
-    # 3rd party apps
     'cloudinary',
     'rest_framework',
+    'dj_rest_auth.registration',
+    'corsheaders',
 
     # local apps
     'app_profile',
@@ -107,6 +115,8 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 MIDDLEWARE = [
+    # https://github.com/adamchainz/django-cors-headers
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -115,6 +125,18 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# https://github.com/adamchainz/django-cors-headers
+# Ref the deployment cheat sheet too
+if 'CLIENT_ORIGIN' in os.environ:
+    CORS_ALLOWED_ORIGINS = [
+        os.environ.get('CLIENT_ORIGIN')
+    ]
+else:
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        r"^https://.*\.gitpod\.io$",
+    ]
+
 
 ROOT_URLCONF = 'drf.urls'
 
@@ -140,12 +162,19 @@ WSGI_APPLICATION = 'drf.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+if 'DEV' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+            }
+            }
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+        }
+    # Use bug print for confirming to connection to the ext. database...
+    # print('connected')
 
 
 # Password validation
