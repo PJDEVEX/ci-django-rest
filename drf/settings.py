@@ -101,7 +101,6 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     'cloudinary',
     'rest_framework',
-    'dj_rest_auth.registration',
     'corsheaders',
 
     # local apps
