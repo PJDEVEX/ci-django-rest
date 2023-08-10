@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .views import root_route
 
 urlpatterns = [
+    #  Root API route
+    path('', root_route, name='root-route'),
     path('admin/', admin.site.urls),
     # login and logout views for the browsable API
     # https://www.django-rest-framework.org/
