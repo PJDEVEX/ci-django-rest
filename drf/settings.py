@@ -77,7 +77,7 @@ DEBUG = True
 
 
 ALLOWED_HOSTS = [
-    os.environ.get('ALLOWED_HOSTS'),
+    os.environ.get('ALLOWED_HOST'),
     '8000-pjdevex-cidjangorest-dpemwwsaqn1.ws-eu102.gitpod.io',
 ]
 
