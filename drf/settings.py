@@ -76,7 +76,7 @@ DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
-    '8000-pjdevex-cidjangorest-dpemwwsaqn1.ws-eu102.gitpod.io',
+    '8000-pjdevex-cidjangorest-dpemwwsaqn1.ws-eu103.gitpod.io',
 ]
 
 # Application definition
