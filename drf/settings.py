@@ -65,6 +65,9 @@ REST_DETAILS_SERIALIZER = {
     'USER_DETAILS_SERIALIZER': 'drf.serializers.UserSerializer',
 }
 
+# Set default value for the SECRET_KEY environment variable
+os.environ.setdefault("SECRET_KEY", "CreateANEWRandomValueHere")
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -128,14 +131,14 @@ MIDDLEWARE = [
 
 # https://github.com/adamchainz/django-cors-headers
 # Ref the deployment cheat sheet too
-# if 'CLIENT_ORIGIN' in os.environ:
-#     CORS_ALLOWED_ORIGINS = [
-#         os.environ.get('CLIENT_ORIGIN')
-#     ]
-# else:
-#     CORS_ALLOWED_ORIGIN_REGEXES = [
-#         r"^https://.*\.gitpod\.io$",
-#     ]
+if 'CLIENT_ORIGIN' in os.environ:
+    CORS_ALLOWED_ORIGINS = [
+        os.environ.get('CLIENT_ORIGIN')
+    ]
+else:
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        r"^https://.*\.gitpod\.io$",
+    ]
 
 if 'CLIENT_ORIGIN_DEV' in os.environ:
     extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
@@ -143,6 +146,7 @@ if 'CLIENT_ORIGIN_DEV' in os.environ:
         rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
     ]
 
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'drf.urls'
 
