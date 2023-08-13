@@ -103,9 +103,10 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount', 
     'dj_rest_auth.registration',
+    'corsheaders',
     'cloudinary',
     'rest_framework',
-    'corsheaders',
+    
 
     # local apps
     'app_profile',
@@ -135,10 +136,10 @@ if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
         os.environ.get('CLIENT_ORIGIN')
     ]
-else:
-    CORS_ALLOWED_ORIGIN_REGEXES = [
-        r"^https://.*\.gitpod\.io$",
-    ]
+# else:
+#     CORS_ALLOWED_ORIGIN_REGEXES = [
+#         r"^https://.*\.gitpod\.io$",
+#     ]
 
 if 'CLIENT_ORIGIN_DEV' in os.environ:
     extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
