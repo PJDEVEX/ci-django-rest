@@ -62,7 +62,7 @@ JWT_AUTH_SAMESITE = 'None'
 
 # Overwrite default serializer
 REST_DETAILS_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'drf_api.serializers.CurrentUserSerializer',
+    'USER_DETAILS_SERIALIZER': 'drf.serializers.CurrentUserSerializer',
 }
 
 # Set default value for the SECRET_KEY environment variable
