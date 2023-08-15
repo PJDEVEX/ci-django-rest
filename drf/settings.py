@@ -61,7 +61,7 @@ JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
 JWT_AUTH_SAMESITE = 'None'
 
 # Overwrite default serializer
-REST_DETAILS_SERIALIZERS = {
+REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'drf.serializers.CurrentUserSerializer',
 }
 
