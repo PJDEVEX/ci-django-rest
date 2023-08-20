@@ -36,18 +36,18 @@ class PostSerializer(serializers.ModelSerializer):
         return value
 
     def get_is_owner(self, obj):
-            """
-            Method to determine if the current user is the owner of the post.
-            """
-            request = self.context['request']
-            return request.user == obj.owner
+        """
+        Method to determine if the current user is the owner of the post.
+        """
+        request = self.context['request']
+        return request.user == obj.owner
 
     def get_like_id(self, obj):
         user = self.context['request'].user
         if user.is_authenticated:
             like = Like.objects.filter(
                 owner=user, post=obj
-                ).first()
+            ).first()
             return like.id if like else None
         return None
 
@@ -59,4 +59,3 @@ class PostSerializer(serializers.ModelSerializer):
             'title', 'content', 'image', 'image_filter',
             'like_id', 'likes_count', 'comments_count',
         ]
-
