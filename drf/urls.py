@@ -31,7 +31,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     # dj_rest_auth urls
     #  https://dj-rest-auth.readthedocs.io/en/latest/installation.html 
-    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('dj-rest-auth/logout/', logout_route),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     # Adding profiles.urls in the main router
